@@ -17,9 +17,9 @@ pipeline {
                     def scriptPath = 'my_script.py'
                     
                     try {
-                        // if(!fileExists(scriptPath)) {
-                        //     error ("Script ${scriptPath} not found.")
-                        // }
+                        if(!fileExists(scriptPath)) {
+                            error ("Script ${scriptPath} not found.")
+                        }
 
                         def result = sh(script: "python3 my_script.py ${ENV_VAR_1} ${ENV_VAR_2} ${params.ARGUMENTS}", returnStatus: true)
 
@@ -34,9 +34,4 @@ pipeline {
             }
         }
     }
-}
-
-def fileExists(filePath) {
-    def file = new File(filePath)
-    return file.exists()
 }
