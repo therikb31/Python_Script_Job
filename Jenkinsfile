@@ -14,9 +14,29 @@ pipeline {
         stage('Run Python Script') {
             steps {
                 script {
-                    sh "python3 my_script.py ${ENV_VAR_1} ${ENV_VAR_2} ${params.ARGUMENTS}"
+                    def scriptPath = 'my_script.py'
+                    
+                    try {
+                        if(!fileExists(scriptPath)) {
+                            error ("Script '$scriptPath' not found.")
+                        }
+
+                        def result = sh(script: "python3 my_script.py ${ENV_VAR_1} ${ENV_VAR_2} ${params.ARGUMENTS}", returnStatus: true)
+
+                        if(result != 0) {
+                            error("Script execution failed")
+                        }
+                    } catch(Exception e) {
+                        error(${e.message})
+                    }
+                    // sh "python3 my_script.py ${ENV_VAR_1} ${ENV_VAR_2} ${params.ARGUMENTS}"
                 }
             }
         }
     }
+}
+
+def fileExists(filePath) {
+    def file = new File(filePath)
+    return file.exists()
 }
