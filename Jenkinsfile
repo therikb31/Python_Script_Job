@@ -1,10 +1,19 @@
 pipeline {
     agent any
+    environment {
+        MY_NAME = "Rik Biswas"
+    }
+    parameters {
+        string(description: 'Parameter', name:'PARAMETER_VARIABLE',defaultValue: 'Parameter')
+    }
 
     stages {
         stage("build") {
             steps {
-                echo 'building the application...'
+                script {
+                    echo "Name: ${env.MY_NAME}"
+                    echo "Params: ${params.PARAMETER_VARIABLE}"
+                }
             }
         }
 
