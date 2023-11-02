@@ -18,7 +18,7 @@ pipeline {
                     
                     try {
                         if(!fileExists(scriptPath)) {
-                            error ("Script '$scriptPath' not found.")
+                            error ("Script ${scriptPath} not found.")
                         }
 
                         def result = sh(script: "python3 my_script.py ${ENV_VAR_1} ${ENV_VAR_2} ${params.ARGUMENTS}", returnStatus: true)
