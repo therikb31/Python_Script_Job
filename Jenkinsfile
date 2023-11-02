@@ -1,32 +1,21 @@
 pipeline {
     agent any
-    environment {
-        MY_NAME = "Rik Biswas"
-    }
+
     parameters {
-        string(description: 'Parameter', name:'PARAMETER_VARIABLE',defaultValue: 'Parameter')
+        string(name: 'ARGUMENTS', defaultValue: '', description: 'Arguments for the Python script')
+    }
+
+    environment {
+        ENV_VAR_1 = 'value1'
+        ENV_VAR_2 = 'value2'
     }
 
     stages {
-        stage("build") {
+        stage('Run Python Script') {
             steps {
                 script {
-                    echo "Name: ${env.MY_NAME}"
-                    echo "Params: ${params.PARAMETER_VARIABLE}"
+                    sh "python3 my_script.py ${ENV_VAR_1} ${ENV_VAR_2} ${params.ARGUMENTS}"
                 }
-            }
-        }
-
-        stage("test") {
-            steps {
-                echo 'testing the application...'
-            }
-        }
-
-        stage("deploy") {
-            steps {
-                echo 'deploying the application'
-
             }
         }
     }
