@@ -29,7 +29,6 @@ pipeline {
                     } catch(Exception e) {
                         error("${e.message}")
                     }
-                    // sh "python3 my_script.py ${ENV_VAR_1} ${ENV_VAR_2} ${params.ARGUMENTS}"
                 }
             }
         }
